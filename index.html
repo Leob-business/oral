@@ -1,1 +1,953 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scripts Oraux – Bac Français</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0c10;
+  --bg2: #131318;
+  --bg3: #1a1a22;
+  --border: #25252f;
+  --gold: #c8a84b;
+  --gold2: #e8c96a;
+  --text: #ece8df;
+  --text2: #9896a4;
+  --text3: #5a5868;
+  --green: #6bbf9e;
+  --blue: #7ab2d0;
+  --rose: #c97a98;
+  --orange: #c9975a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+}
 
+/* SIDEBAR */
+.sidebar {
+  width: 250px;
+  min-width: 250px;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 16px 0;
+}
+.sidebar-logo {
+  font-family: 'Lora', serif;
+  font-size: 0.95rem;
+  color: var(--gold);
+  padding: 4px 18px 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+.sidebar-logo small {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  color: var(--text3);
+  font-weight: 400;
+  margin-top: 2px;
+}
+.group-title {
+  font-size: 0.63rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text3);
+  padding: 12px 18px 5px;
+  font-weight: 500;
+}
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  background: none;
+  border: none;
+  border-left: 3px solid transparent;
+  color: var(--text2);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.79rem;
+  padding: 6px 18px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.12s;
+}
+.nav-btn:hover { background: var(--bg3); color: var(--text); }
+.nav-btn.active { background: var(--bg3); color: var(--gold); border-left-color: var(--gold); font-weight: 500; }
+.nav-badge {
+  font-size: 0.62rem;
+  background: var(--bg3);
+  color: var(--text3);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.nav-btn.active .nav-badge { background: rgba(200,168,75,0.15); color: var(--gold); }
+
+/* MAIN */
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 40px 48px;
+  max-width: 860px;
+}
+
+/* SCRIPT */
+.script { display: none; }
+.script.visible { display: block; animation: in 0.2s ease; }
+@keyframes in { from { opacity:0; transform: translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+/* HEADER */
+.s-header {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.s-num {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.s-title {
+  font-family: 'Lora', serif;
+  font-size: 1.6rem;
+  font-style: italic;
+  color: var(--text);
+  margin-bottom: 5px;
+  line-height: 1.3;
+}
+.s-author {
+  font-size: 0.85rem;
+  color: var(--text2);
+  font-weight: 300;
+}
+.s-author b { color: var(--gold); font-weight: 500; }
+.s-axe {
+  margin-top: 14px;
+  background: rgba(200,168,75,0.07);
+  border: 1px solid rgba(200,168,75,0.2);
+  border-radius: 7px;
+  padding: 11px 15px;
+  font-size: 0.84rem;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.55;
+}
+.s-axe strong { color: var(--gold2); font-style: normal; }
+
+/* BLOCKS */
+.block {
+  margin-bottom: 30px;
+}
+.block-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.68rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 12px;
+  padding: 4px 10px 4px 0;
+}
+.label-intro { color: var(--green); }
+.label-mvt { color: var(--blue); }
+.label-ccl { color: var(--rose); }
+
+.block-label::before {
+  content: '';
+  display: block;
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+}
+.label-intro::before { background: var(--green); }
+.label-mvt::before { background: var(--blue); }
+.label-ccl::before { background: var(--rose); }
+
+/* SPEECH TEXT */
+.speech {
+  font-family: 'Lora', serif;
+  font-size: 1.01rem;
+  line-height: 1.88;
+  color: var(--text);
+  position: relative;
+}
+.speech p {
+  margin-bottom: 1.1em;
+}
+.speech p:last-child { margin-bottom: 0; }
+
+/* HIGHLIGHT TYPES */
+.speech .proc {
+  color: var(--blue);
+  font-style: italic;
+  font-size: 0.95em;
+}
+.speech .cite {
+  background: rgba(200,168,75,0.1);
+  border-radius: 3px;
+  padding: 0 4px;
+  color: var(--gold2);
+  font-style: italic;
+}
+.speech .effet {
+  color: var(--green);
+  font-weight: 500;
+  font-style: normal;
+}
+.speech .mvt-head {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--blue);
+  letter-spacing: 0.03em;
+  margin-bottom: 0.6em;
+  margin-top: 0.2em;
+  font-style: normal;
+}
+
+/* MVT DIVIDER */
+.mvt-block {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 20px 22px;
+  margin-bottom: 14px;
+}
+.mvt-num-tag {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--blue);
+  background: rgba(122,178,208,0.1);
+  border: 1px solid rgba(122,178,208,0.2);
+  padding: 3px 9px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.mvt-title-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 14px;
+  font-style: italic;
+}
+
+.intro-block {
+  background: rgba(107,191,158,0.05);
+  border: 1px solid rgba(107,191,158,0.15);
+  border-radius: 9px;
+  padding: 20px 22px;
+  margin-bottom: 14px;
+}
+.ccl-block {
+  background: rgba(201,122,152,0.05);
+  border: 1px solid rgba(201,122,152,0.15);
+  border-radius: 9px;
+  padding: 20px 22px;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-logo">📖 Scripts Oraux<small>Bac Français — Mardi 31 à 9h00</small></div>
+
+  <div class="group-title">DSV · La Boétie</div>
+  <button class="nav-btn active" onclick="show('ll1',this)"><span class="nav-badge">LL1</span> Peuples insensés</button>
+  <button class="nav-btn" onclick="show('ll2',this)"><span class="nav-badge">LL2</span> Les mieux nés</button>
+  <button class="nav-btn" onclick="show('ll3',this)"><span class="nav-badge">LL3</span> Emblèmes monarchie</button>
+
+  <div class="group-title">La Fontaine</div>
+  <button class="nav-btn" onclick="show('ll4',this)"><span class="nav-badge">LL4</span> Le Loup et le Chien</button>
+
+  <div class="group-title">Manon Lescaut · Prévost</div>
+  <button class="nav-btn" onclick="show('t5',this)"><span class="nav-badge">T5</span> Le coup de foudre</button>
+  <button class="nav-btn" onclick="show('t6',this)"><span class="nav-badge">T6</span> Père / fils</button>
+  <button class="nav-btn" onclick="show('t7',this)"><span class="nav-badge">T7</span> Mort de Manon</button>
+
+  <div class="group-title">Le Rouge et le Noir · Stendhal</div>
+  <button class="nav-btn" onclick="show('t8',this)"><span class="nav-badge">T8</span> Plaidoyer de Julien</button>
+
+  <div class="group-title">On ne badine pas · Musset</div>
+  <button class="nav-btn" onclick="show('t9',this)"><span class="nav-badge">T9</span> Retrouvailles (I,2)</button>
+  <button class="nav-btn" onclick="show('t10',this)"><span class="nav-badge">T10</span> Tirades (II,5)</button>
+  <button class="nav-btn" onclick="show('t11',this)"><span class="nav-badge">T11</span> Dénouement (III,8)</button>
+
+  <div class="group-title">La Double Inconstance · Marivaux</div>
+  <button class="nav-btn" onclick="show('t12',this)"><span class="nav-badge">T12</span> Aveu de Silvia (II,9)</button>
+</nav>
+
+<main class="main">
+
+<!-- ===== LL1 ===== -->
+<div class="script visible" id="ll1">
+  <div class="s-header">
+    <div class="s-num">Lecture Linéaire 1 · Littérature d'idées · XVIe siècle</div>
+    <div class="s-title">« Pauvres et misérables peuples insensés »</div>
+    <div class="s-author">Discours de la Servitude Volontaire — <b>Étienne de La Boétie</b></div>
+    <div class="s-axe"><strong>Axe :</strong> Cette véhémente apostrophe aux peuples est en réalité un <strong>appel à la raison</strong> pour imposer comme évidente une solution originale : la résistance passive.</div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-intro">Introduction</div>
+    <div class="intro-block"><div class="speech">
+      <p>Étienne de La Boétie est un humaniste du XVIe siècle, proche ami de Montaigne, qui rédige le <span class="cite">Discours de la Servitude Volontaire</span> vers 1548. Ce texte fondateur de la pensée politique occidentale circule d'abord clandestinement avant d'être publié. Dans l'extrait qui nous est proposé, La Boétie apostrophe directement les peuples asservis pour les confronter à leur propre responsabilité dans l'oppression qu'ils subissent, puis leur propose une solution d'une simplicité déconcertante : la résistance passive.</p>
+      <p>Nous montrerons donc que cette véhémente apostrophe aux peuples est en réalité un <span class="effet">appel à la raison</span> pour imposer comme évidente la résistance passive. Dans un premier mouvement, La Boétie dresse le tableau du scandale de la servitude volontaire. Dans un second mouvement, il formule son appel à la résistance passive.</p>
+    </div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-mvt">Développement</div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 1</div>
+      <div class="mvt-title-text">Le scandale de la servitude volontaire</div>
+      <div class="speech">
+        <p>Le texte s'ouvre sur une apostrophe directe aux peuples : <span class="cite">« Pauvres et misérables peuples insensés, nations opiniâtres en votre mal et aveugles en votre bien ! »</span> L'accumulation d'adjectifs dépréciateurs crée un double registre : <span class="effet">pathétique</span> — La Boétie plaint ces peuples réduits à la misère — et <span class="effet">polémique</span>, puisqu'il les interpelle avec indignation. L'antithèse « mal / bien » et le <span class="proc">parallélisme de construction</span> soulignent la perversion de leur volonté : ils s'acharnent à se nuire.</p>
+        <p>La Boétie décrit ensuite les spoliations du tyran à travers une <span class="proc">gradation des verbes</span> — « emporter, piller, voler, dépouiller » — qui suggère un dénuement de plus en plus intime, allant jusqu'à la trahison des ancêtres par la spoliation du patrimoine. Mais le tyran n'est jamais sujet grammatical : c'est le peuple qui <span class="cite">« se laisse emporter »</span> sous ses propres yeux. La <span class="proc">construction pronominale passive</span> insiste sur la responsabilité des peuples eux-mêmes, <span class="effet">complices autant que victimes</span>.</p>
+        <p>Cette complicité est ensuite dénoncée par une série de <span class="proc">six questions rhétoriques</span> construites sur un <span class="proc">parallélisme syntaxique</span> : <span class="cite">« D'où a-t-il pris tant d'yeux dont il vous épie, si vous ne les lui donnez ? Comment a-t-il tant de mains pour vous frapper, s'il ne les prend de vous ? »</span> Les pronoms alternent — « il/lui » puis « vous/vôtres » — soulignant que le peuple est à la fois la cause et la victime du régime tyrannique. Ce portrait du tyran omnipotent, qui évoque les mythes d'Argos et des Hécatonchires, révèle le scandale central : c'est le peuple qui en a fait un géant effrayant.</p>
+        <p>L'<span class="proc">anaphore de « vous »</span> ouvre enfin une série de propositions à <span class="proc">complément circonstanciel de but pervers</span> : <span class="cite">« Vous semez vos fruits afin qu'il les gâte, vous nourrissez vos filles afin qu'il ait de quoi rassasier sa luxure, vous nourrissez vos enfants afin qu'il les conduise à la boucherie. »</span> La gradation va des biens matériels à la famille jusqu'à l'humanité elle-même. Chaque action du peuple se retourne contre lui. La métaphore animale finale — « vous brisez à la peine pour qu'il se prélasse en ses délices » — traduit la réduction du peuple à l'état d'<span class="effet">animal attelé</span>.</p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 2</div>
+      <div class="mvt-title-text">L'appel à la résistance passive</div>
+      <div class="speech">
+        <p>Après avoir brossé ce tableau accablant, La Boétie interrompt l'énumération par une <span class="proc">comparaison avec les animaux</span> : <span class="cite">« de tant d'indignités que même les bêtes ne tolèreraient ni ne supporteraient »</span>. Cela renforce l'attaque en soulignant que le comportement des peuples est contre-nature, <span class="effet">pire que celui des bêtes</span>.</p>
+        <p>Mais la solution proposée surprend par sa simplicité déconcertante : <span class="cite">« Soyez décidés à ne plus servir, et vous voilà libres. »</span> L'impératif et la conjonction de coordination « et » ne supposent aucun processus complexe — une seule étape, purement logique. La conjonction « et » ne suppose même pas de délai : c'est une relation de <span class="effet">cause à effet immédiate</span>. Il ne s'agit pas d'une rébellion armée, mais d'une désobéissance intérieure, d'une réorientation de la volonté.</p>
+        <p>L'orateur insiste en utilisant des antithèses : <span class="cite">« Je ne veux pas que vous le poussiez ou que vous l'ébranliez, mais seulement : ne le soutenez plus. »</span> L'émancipation est définie par le négatif. L'image finale du <span class="proc">colosse</span> illustre cette thèse avec force : le tyran est comme un géant qui s'effondrerait <span class="cite">« de son propre poids »</span> si le peuple lui dérobait sa base. Les monosyllabes finaux — « s'effondrer au sol et se rompre » — <span class="effet">miment rythmiquement la chute du colosse</span>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-ccl">Conclusion</div>
+    <div class="ccl-block"><div class="speech">
+      <p>Cet extrait révèle ainsi le cœur de la pensée de La Boétie : la servitude n'est pas subie, elle est choisie, et donc elle peut être refusée. La véhémence rhétorique de l'apostrophe initiale n'est qu'un détour paradoxal pour conduire à cette conclusion d'une <span class="effet">implacable simplicité</span>. On peut mettre cet extrait en relation avec la fable de La Fontaine « Le Loup et le Chien », qui illustre par l'apologue la même thèse : la liberté vaut mieux que le confort de la servitude.</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ===== LL2 ===== -->
+<div class="script" id="ll2">
+  <div class="s-header">
+    <div class="s-num">Lecture Linéaire 2 · Littérature d'idées · XVIe siècle</div>
+    <div class="s-title">« Il s'en trouve toujours cependant quelques-uns »</div>
+    <div class="s-author">Discours de la Servitude Volontaire — <b>Étienne de La Boétie</b></div>
+    <div class="s-axe"><strong>Axe :</strong> Cette digression présente un <strong>contrepoint optimiste</strong> à la servitude volontaire : les « mieux nés » incarnent l'espoir d'une résistance possible.</div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-intro">Introduction</div>
+    <div class="intro-block"><div class="speech">
+      <p>La Boétie, humaniste du XVIe siècle, rédige le Discours de la Servitude Volontaire vers 1548. Dans cet extrait, après avoir décrit la masse des peuples asservis et dénaturés par la coutume, il introduit une digression sur une exception : les <span class="cite">« mieux nés »</span>, ces rares individus qui résistent à la dénaturation.</p>
+      <p>Nous montrerons dans quelle mesure cette digression présente un <span class="effet">contrepoint optimiste</span> à la vision sombre de la servitude volontaire. Le texte se structure en trois mouvements : d'abord le portrait des mieux nés, puis l'impossibilité de s'entreconnaître sous la tyrannie, enfin la réaffirmation de leur exception à travers une maxime d'espoir.</p>
+    </div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-mvt">Développement</div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 1</div>
+      <div class="mvt-title-text">Le portrait des « mieux nés » — l'exception à la dénaturation</div>
+      <div class="speech">
+        <p>L'extrait s'ouvre sur une <span class="proc">concession</span> marquée par l'adverbe « cependant » : <span class="cite">« Il s'en trouve toujours cependant quelques-uns, de meilleure naissance que les autres. »</span> Le pronom indéfini pose d'emblée l'exception face à la masse des asservis. La Boétie dresse leur portrait moral à travers une <span class="proc">anaphore du pronom relatif « qui »</span> : « qui sentent le poids du joug et ne peuvent se retenir de le secouer, qui ne s'apprivoisent jamais dans la sujétion. » Ces relatives soulignent que les mieux nés n'ont pas oublié leur liberté naturelle. La reprise de la <span class="proc">métaphore du joug</span> — qui assimile les hommes asservis à des animaux attelés — met en valeur leur désir d'affranchissement : on passe du verbe « sentir » au verbe « secouer », <span class="effet">de la conscience à la révolte</span>.</p>
+        <p>La <span class="proc">comparaison avec Ulysse</span> leur confère une dimension poétique et épique : comme Ulysse cherchant à revoir la fumée de son foyer, ils sont en quête de leur patrie d'origine, c'est-à-dire leur nature première, leur liberté.</p>
+        <p>Leurs qualités sont ensuite énumérées : intelligence, lucidité, mémoire historique. La Boétie propose ici une véritable définition de l'histoire comme science qui met à profit le passé pour éclairer le présent. Surtout, leur imagination est une puissance positive : ils <span class="cite">« savourent encore la liberté en leur esprit »</span>. Le verbe « savourer » exploite le <span class="proc">double sens du latin sapere</span> : savoir et goûter. <span class="effet">Le savoir devient un goût inextinguible pour la liberté.</span></p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 2</div>
+      <div class="mvt-title-text">L'impossibilité de s'entreconnaître sous la tyrannie</div>
+      <div class="speech">
+        <p>Cependant, cette exception se heurte à un obstacle majeur. L'exemple du Grand Turc illustre que le tyran comprend que les livres et le savoir <span class="cite">« donnent aux hommes le bon sens pour haïr la tyrannie »</span>. Le despote ottoman supprime donc l'instruction pour maintenir son emprise — <span class="effet">le savoir est perçu comme une arme politique</span>.</p>
+        <p>La Boétie constate alors que les mieux nés <span class="cite">« ne s'entreconnaissent pas »</span>. Ce verbe est fondamental : dans l'état de nature, les hommes communiquaient et fraternisaient naturellement. La tyrannie brise ce lien. La <span class="proc">gradation ascendante</span> — <span class="cite">« faire, parler, quasi de penser »</span> — suggère la disparition progressive de la nature humaine elle-même sous le régime tyrannique. Ces êtres restent <span class="cite">« isolés en leurs rêveries »</span> : l'isolement conduit à l'inaction.</p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 3</div>
+      <div class="mvt-title-text">Réaffirmation de l'exception — la maxime d'espoir</div>
+      <div class="speech">
+        <p>Mais une nouvelle concession introduite par « toutefois » renverse ce pessimisme. La Boétie invite à consulter les faits du temps passé, les annales anciennes : les justes libérateurs de leur peuple sont très souvent parvenus à leurs fins. La <span class="proc">litote</span> — <span class="cite">« il s'en trouvera peu ou point qui n'en soient venus à bout »</span> — invite à reformuler positivement : presque tous ont réussi.</p>
+        <p>L'extrait se clôt sur une <span class="proc">maxime</span> d'une grande force poétique : <span class="cite">« la liberté, pour se faire jour, s'épaule elle-même. »</span> La <span class="proc">personnification de la liberté</span> lui prête un bras qui la soutient — image inversée du colosse du premier texte, qui s'effondrait sans soutien. Cette formule condense l'espoir : <span class="effet">la liberté porte en elle-même la force de triompher</span>. C'est aussi, selon certains commentateurs, une allusion audacieuse au tyrannicide.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-ccl">Conclusion</div>
+    <div class="ccl-block"><div class="speech">
+      <p>Cet extrait montre que la pensée de La Boétie est plus complexe qu'un simple pessimisme. Après avoir dénoncé la masse des asservis, il dessine un horizon d'espoir à travers ces rares élus capables de résister, même sous la tyrannie. On peut relier cet extrait à la fable de La Fontaine, où le Loup — qui refuse la servitude malgré les séductions du Chien — figure précisément l'un de ces « mieux nés ».</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ===== LL3 ===== -->
+<div class="script" id="ll3">
+  <div class="s-header">
+    <div class="s-num">Lecture Linéaire 3 · Littérature d'idées · XVIe siècle</div>
+    <div class="s-title">« Les nôtres semèrent en France… »</div>
+    <div class="s-author">Discours de la Servitude Volontaire — <b>Étienne de La Boétie</b></div>
+    <div class="s-axe"><strong>Axe :</strong> Nous montrerons l'<strong>ambiguïté</strong> de la justification des emblèmes de la monarchie française : est-elle sincère ou ironique ?</div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-intro">Introduction</div>
+    <div class="intro-block"><div class="speech">
+      <p>La Boétie, humaniste du XVIe siècle, rédige le Discours de la Servitude Volontaire vers 1548. Dans cet extrait, après avoir montré comment les tyrans antiques manipulent les peuples par des emblèmes sacrés, il aborde les symboles de la monarchie française : les crapauds, les fleurs de lys, l'ampoule et l'oriflamme. Ce passage pose une question fondamentale : La Boétie défend-il sincèrement la monarchie, ou son éloge dissimule-t-il une ironie subversive ?</p>
+      <p>Nous montrerons l'ambiguïté de la justification de ces emblèmes : est-elle <span class="effet">sincère ou ironique</span> ? Dans un premier mouvement, le texte hésite entre défense et attaque de la monarchie. Dans un second mouvement, il développe un argument ambigu : l'éloge de la poésie.</p>
+    </div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-mvt">Développement</div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 1</div>
+      <div class="mvt-title-text">Défense sincère ou attaque ironique de la monarchie ?</div>
+      <div class="speech">
+        <p>L'extrait s'ouvre sur une <span class="proc">litote</span> : <span class="cite">« je ne veux pas croire mauvais »</span> ces emblèmes. En apparence, La Boétie les valide. L'éloge qui suit semble sincère : les rois de France ont toujours été bons en paix et vaillants à la guerre, et seraient élus par Dieu avant même de naître.</p>
+        <p>Mais plusieurs indices troublent cette lecture sincère. D'abord, dans le texte original, l'antécédent de « les nôtres » est <span class="effet">« les tyrans »</span> — cet extrait suit immédiatement une série d'exemples de tyrans antiques qui manipulent les peuples par des emblèmes sacrés. Ensuite, l'éloge est excessif : « toujours de bons rois » est une <span class="proc">hyperbole</span> invraisemblable qui signale l'ironie. De plus, La Boétie justifie sa validation par <span class="proc">l'argument de la coutume</span> — or il vient de passer plusieurs pages à démontrer que la coutume est précisément la première cause de la servitude volontaire. Enfin, la justification de l'élection divine fait écho au passage où il montre que les tyrans <span class="cite">« placent la religion comme garde-corps »</span> pour manipuler le peuple.</p>
+        <p>L'accumulation de ces contradictions laisse le lecteur incertain : éloge maladroit d'un homme qui n'ose pas critiquer ouvertement la monarchie ? Ou <span class="effet">ironie volontaire et calculée</span> ?</p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 2</div>
+      <div class="mvt-title-text">L'argument ambigu : l'éloge de la poésie française</div>
+      <div class="speech">
+        <p>La Boétie refuse ensuite de « décortiquer de trop près » ces emblèmes, et il en donne une raison surprenante : il veut préserver <span class="cite">« ce beau jeu où peut magnifiquement s'illustrer notre poésie française »</span>. Il fait alors un éloge sincère de Ronsard, Baïf et Du Bellay, en utilisant le déterminant possessif « notre » — <span class="effet">fierté nationale authentique</span>.</p>
+        <p>Mais cette substitution de la vérité poétique à la vérité historique est-elle vraiment une défense de la monarchie ? L'ironie perce dans plusieurs détails : le terme <span class="cite">« contes »</span> qui désigne les légendes royales suggère leur caractère fabuleux et non vérifié ; le mot <span class="cite">« plaisamment »</span> laisse entendre un divertissement plutôt qu'une vérité ; le rapprochement entre emblèmes chrétiens sacrés et symboles parfaitement païens — l'olive d'Athéna, le bouclier de Numa — <span class="proc">mine l'autorité religieuse des emblèmes royaux</span>.</p>
+        <p>La phrase conclusive est une <span class="proc">prétérition</span> parfaite : <span class="cite">« Certes, je serais insolent de vouloir démentir nos livres, et de marcher ainsi sur les brisées de nos Poètes. »</span> En affirmant qu'il ne veut pas démentir, il a déjà démenti. La légitimité de la royauté s'efface derrière celle de la poésie, et le respect affiché pour la littérature prime sur celui dû à la monarchie et à l'Église.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-ccl">Conclusion</div>
+    <div class="ccl-block"><div class="speech">
+      <p>Cet extrait est l'un des plus subtils du DSV. La Boétie met en place une stratégie rhétorique d'une grande habileté : feindre de défendre la monarchie tout en semant les graines du doute. Cette ambiguïté calculée rappelle que le DSV circulait clandestinement — La Boétie ne pouvait pas attaquer frontalement la monarchie française sans risque. Le texte illustre ainsi que, comme il le montre lui-même, il n'est parfois pas nécessaire de « pousser » le colosse pour l'ébranler : il suffit de ne plus le soutenir.</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ===== LL4 ===== -->
+<div class="script" id="ll4">
+  <div class="s-header">
+    <div class="s-num">Lecture Linéaire 4 · Fable · XVIIe siècle</div>
+    <div class="s-title">« Le Loup et le Chien »</div>
+    <div class="s-author">Fables, Livre I — <b>Jean de La Fontaine</b></div>
+    <div class="s-axe"><strong>Axe :</strong> Comment cette fable défend-elle l'idée que <strong>la liberté est le bien le plus précieux</strong>, supérieur à tout le confort de la servitude ?</div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-intro">Introduction</div>
+    <div class="intro-block"><div class="speech">
+      <p>Jean de La Fontaine, auteur du XVIIe siècle, publie les Fables en 1668. Lui-même contraint de dépendre de mécènes — d'abord Nicolas Fouquet, puis Madame de La Sablière — il connaît personnellement la tension entre le désir d'indépendance et la nécessité de la protection. La fable intitulée <span class="cite">« Le Loup et le Chien »</span>, cinquième du Livre premier, met en présence deux animaux dans une confrontation dialoguée animée : un loup famélique et un chien bien nourri mais enchaîné.</p>
+      <p>Nous verrons comment cette fable défend l'idée que <span class="effet">la liberté est le bien le plus précieux</span>. Dans un premier mouvement, l'art du récit oriente notre sympathie vers le Loup. Dans un deuxième mouvement, le discours du Chien expose les séductions de la servitude. Enfin, dans un troisième mouvement, une bascule finale révèle la thèse de la fable.</p>
+    </div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-mvt">Développement</div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 1</div>
+      <div class="mvt-title-text">L'art du récit — le point de vue du Loup</div>
+      <div class="speech">
+        <p>Les deux premiers vers posent l'antagonisme : <span class="cite">« Un Loup n'avait que les os et la peau, / Tant les chiens faisaient bonne garde. »</span> La <span class="proc">négation restrictive</span> souligne la misère du Loup au singulier face aux chiens au pluriel. Le lecteur est d'emblée invité à plaindre le Loup.</p>
+        <p>La rencontre avec le Chien est décrite du point de vue du Loup affamé : il est <span class="cite">« beau, gras, poli »</span>. L'adjectif « poli » joue sur deux sens : le poil luisant, et les bonnes manières du courtisan. Et « fourvoyé » signifie à la fois égaré et dénaturé — l'<span class="proc">ironie discrète</span> du fabuliste se fait déjà entendre. Le <span class="proc">discours indirect libre</span> donne accès aux pensées du Loup : il envisage un combat, y renonce, et adopte une attitude servile. Cette <span class="proc">focalisation interne</span> oriente la sympathie du lecteur : <span class="effet">c'est le Loup que nous suivrons, c'est son point de vue que nous adopterons</span>.</p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 2</div>
+      <div class="mvt-title-text">Le discours du Chien — les séductions de la servitude</div>
+      <div class="speech">
+        <p>Le Chien est un séducteur habile. Il commence par flatter le Loup avec un <span class="proc">vouvoiement et une apostrophe galante</span>. Il lui fait miroiter une vie confortable : sécurité, nourriture, repos. Pour critiquer la condition des loups, il évite de l'impliquer directement — il parle des loups en général, pour ne pas blesser son interlocuteur.</p>
+        <p>Mais l'ironie du fabuliste <span class="effet">démystifie ce discours</span> pour le lecteur. La rime <span class="cite">« lippée / épée »</span> révèle qu'il faut renoncer à toute noblesse morale pour une lippée — une simple écuelle de soupe. La récompense détaillée est dérisoire : des reliefs, des os, quelques caresses. Le terme « reliefs » — placé à la césure — et le parallélisme qui met en valeur « os » montrent que son salaire est constitué de miettes. Cela rappelle directement la manière dont La Boétie, dans le DSV, démystifie les largesses du tyran.</p>
+        <p>Surtout, le Chien commet un <span class="proc">mensonge par omission</span> décisif : il ne mentionne jamais la laisse. <span class="effet">Ce silence sur l'essentiel est le cœur de sa tromperie.</span></p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 3</div>
+      <div class="mvt-title-text">La bascule et la chute — le col pelé</div>
+      <div class="speech">
+        <p>Le Loup séduit est en route vers la maison du maître, lorsqu'un détail visuel le stoppe net : <span class="cite">« le col du Chien pelé »</span>. Ce n'est pas un argument qui le réveille, mais une <span class="proc">marque physique</span> de la laisse imprimée dans le corps — la servitude qui se lit dans la chair.</p>
+        <p>Le Chien tente d'esquiver avec un <span class="proc">euphémisme</span> et une périphrase allusive. Mais sa mauvaise conscience est manifeste — ses réponses témoignent de ce qu'il a fait le choix du confort sans assumer d'avoir choisi la servitude.</p>
+        <p>La réplique du Loup est alors catégorique. Au <span class="proc">participe passé « attaché »</span> — servitude figée, immobile — s'opposent les verbes d'action « courir » et « vouloir ». L'<span class="proc">antithèse liberté/servitude</span> se lit dans la grammaire elle-même. Son refus ne tolère aucun compromis. La fable se clôt sur l'image du Loup qui <span class="cite">« court encor »</span>. Le <span class="proc">présent d'énonciation</span> se colore d'un présent permanent grâce à l'adverbe « encor » : <span class="effet">défendre la liberté est un combat sans fin et permanent</span>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-ccl">Conclusion</div>
+    <div class="ccl-block"><div class="speech">
+      <p>Cette fable ne comporte pas de morale explicite — elle n'en a pas besoin. La victoire symbolique du Loup dans l'affrontement impose la thèse : la liberté vaut mieux que tout le confort de la servitude. L'art du fabuliste oriente toute la sympathie du lecteur vers le Loup épris de liberté et le dissuade de se laisser tenter par le discours fallacieux du Chien. La portée de cette fable reste intemporelle : elle nous invite à réfléchir aux formes contemporaines de la servitude volontaire que dénonce La Boétie.</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ===== T5 ===== -->
+<div class="script" id="t5">
+  <div class="s-header">
+    <div class="s-num">Explication Linéaire 5 · Roman · XVIIIe siècle</div>
+    <div class="s-title">« À peine eus-je achevé… » — La reconquête de Manon</div>
+    <div class="s-author">Manon Lescaut — <b>Abbé Prévost (1753)</b></div>
+    <div class="s-axe"><strong>Axe :</strong> Le narrateur Des Grieux se présente comme le <strong>jouet de la passion</strong>, affirmant en réalité la primauté du plaisir sensible sur la raison.</div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-intro">Introduction</div>
+    <div class="intro-block"><div class="speech">
+      <p>L'Abbé Prévost publie Manon Lescaut en 1753, roman présenté comme les mémoires d'un homme de qualité. Des Grieux, jeune homme de bonne famille, y raconte rétrospectivement comment il a tout sacrifié par amour pour Manon Lescaut. Dans l'extrait proposé, tiré de la première partie, Des Grieux vient de quitter le séminaire de Saint-Sulpice pour retrouver Manon. Il lui adresse des reproches — mais Manon l'embrasse, et il capitule une nouvelle fois.</p>
+      <p>Nous verrons comment le narrateur se présente comme <span class="effet">le jouet de la passion</span>, affirmant en réalité la primauté du plaisir sensible sur la raison et la morale. Dans un premier mouvement, nous observerons la reproduction du coup de foudre initial. Dans un second mouvement, les reproches de Des Grieux révèlent leur inutilité. Enfin, dans un troisième mouvement, Des Grieux prononce une déclamation sur la force irrésistible des passions.</p>
+    </div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-mvt">Développement</div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 1</div>
+      <div class="mvt-title-text">La reproduction du coup de foudre</div>
+      <div class="speech">
+        <p>Le mouvement s'ouvre sur la concomitance entre la fin des paroles de Des Grieux et les gestes de Manon : <span class="cite">« À peine eus-je achevé ces derniers mots, qu'elle se leva avec transport pour venir m'embrasser. »</span> Cette <span class="proc">proposition temporelle de rapidité</span> souligne l'immédiateté de la réaction de Manon, la force irrésistible de son désir de reconquête. Les <span class="proc">hyperboles</span> — « mille caresses passionnées », « tous les noms que l'amour invente » — manifestent la volonté ostensible de Manon. Mais il faut noter que Manon n'a pas la parole directe : son discours est <span class="proc">narrativisé</span> par Des Grieux. <span class="effet">C'est le corps de Manon qui parle, pas ses mots.</span></p>
+        <p>Face à cette effusion, Des Grieux oppose une résistance : <span class="cite">« Je n'y répondais encore qu'avec langueur. »</span> La restriction souligne sa retenue — mais l'adverbe « encore » laisse déjà entendre qu'il cèdera. Sa sidération est explicitée par une <span class="proc">longue comparaison</span> : celle de quelqu'un qui se retrouve <span class="cite">« la nuit dans une campagne écartée »</span>. Cette comparaison déploie un champ lexical de la peur — « épouvanté, frémissait, horreur secrète » — pour signifier que la passion a quelque chose de <span class="effet">surnaturel et de terrifiable</span>. L'expérience se répète mais n'ouvre sur aucun savoir qui permettrait de s'en prémunir.</p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 2</div>
+      <div class="mvt-title-text">Des reproches inutiles</div>
+      <div class="speech">
+        <p>Le rapprochement physique symbolise la réunion des amants : <span class="cite">« Nous nous assîmes l'un près de l'autre. »</span> La <span class="proc">forme pronominale réciproque</span> et la préposition expriment la symétrie, la réciprocité — et ce langage du corps rend d'avance vains les reproches qui vont suivre.</p>
+        <p>Ces reproches, exprimés au discours direct, présentent Des Grieux sous les traits de l'amant éploré, vassal soumis face à la cruauté de sa dame. Trois injonctions scandent le passage : <span class="cite">« Dites-moi maintenant... Dites-moi du moins... dites-moi si vous serez plus fidèle. »</span> Elles sont censées ouvrir un dialogue, mais Des Grieux fait lui-même les questions et les réponses : <span class="cite">« Non, non, la Nature n'en fait guère de la même trempe. »</span> Manon n'a pas la parole — c'est un <span class="proc">monologue déguisé en dialogue</span>.</p>
+        <p>La réponse de Manon est narrativisée en une seule phrase : <span class="cite">« Elle me répondit des choses si touchantes... qu'elle m'attendrit à un degré inexprimable. »</span> La <span class="proc">consécutive hyperbolique</span> souligne l'incapacité de Des Grieux à résister. <span class="effet">Le lecteur, comme Renoncour, n'en saura pas davantage — Manon reste insaisissable.</span></p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 3</div>
+      <div class="mvt-title-text">La déclamation sur la force des passions</div>
+      <div class="speech">
+        <p>Le retournement est complet. Des Grieux passe du vouvoiement au tutoiement : <span class="cite">« Chère Manon ! tu es trop adorable pour une créature. »</span> Ce glissement marque la capitulation totale. Le terme « adorable » <span class="proc">détourne le lexique religieux</span> pour hisser Manon au rang d'une divinité.</p>
+        <p>La figure centrale est celle de la <span class="cite">« délectation victorieuse »</span>. Ce terme théologique désigne le plaisir procuré par la grâce divine. Des Grieux reprend la conception janséniste des deux délectations — grâce divine contre plaisirs des sens — pour la <span class="proc">subvertir</span> : Manon, créature terrestre, produit en lui l'effet de la grâce divine. C'est une <span class="effet">profanation qui affirme le triomphe du plaisir sensible</span> sur la raison et la religion.</p>
+        <p>La conscience lucide de Des Grieux est soulignée par la formule : <span class="cite">« Je vais perdre ma fortune et ma réputation pour toi ; je le prévois bien, je lis ma destinée dans tes beaux yeux. »</span> Le <span class="proc">futur proche et le polyptote</span> marquent le caractère inéluctable du déclassement. Et pourtant il l'accepte — la question rhétorique finale <span class="cite">« de quelles pertes ne serai-je pas consolé par ton amour ? »</span> scelle la <span class="effet">primauté absolue de la passion sur toute autre valeur</span>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-ccl">Conclusion</div>
+    <div class="ccl-block"><div class="speech">
+      <p>Cet extrait illustre le paradoxe central du roman : Des Grieux est un personnage lucide — il sait qu'il se perd — et pourtant totalement impuissant. La passion est décrite comme une force surnaturelle qui court-circuite le libre arbitre. Prévost offre ainsi, dans une forme romanesque nouvelle, une réflexion sur la relation entre raison, religion et désir qui annonce les grandes problématiques du XVIIIe siècle.</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ===== T6 ===== -->
+<div class="script" id="t6">
+  <div class="s-header">
+    <div class="s-num">Explication Linéaire 6 · Roman · XVIIIe siècle</div>
+    <div class="s-title">La confrontation père / fils — La rupture définitive</div>
+    <div class="s-author">Manon Lescaut — <b>Abbé Prévost (1753)</b></div>
+    <div class="s-axe"><strong>Axe :</strong> Nous montrerons que le récit de cette confrontation entre deux générations est <strong>théâtralisé</strong> — attitudes, gestes et paroles construisent un véritable drame.</div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-intro">Introduction</div>
+    <div class="intro-block"><div class="speech">
+      <p>L'Abbé Prévost publie Manon Lescaut en 1753. Dans cet extrait de la seconde partie, Des Grieux tente une dernière fois de persuader son père de sauver Manon, condamnée à la déportation en Amérique. S'affrontent ici deux générations aux valeurs radicalement opposées : la passion amoureuse pour Des Grieux, l'honneur et la sagesse pour son père.</p>
+      <p>Nous montrerons que le récit de cette confrontation est <span class="effet">théâtralisé</span> : les attitudes physiques, les gestes et les paroles construisent un véritable drame. Dans un premier mouvement, la menace de mourir se révèle vaine. Dans un second mouvement, l'imploration pathétique est également sans effet. Enfin, dans un troisième mouvement, une rupture définitive et tragique se consomme.</p>
+    </div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-mvt">Développement</div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 1</div>
+      <div class="mvt-title-text">Une menace vaine</div>
+      <div class="speech">
+        <p>Des Grieux adopte d'emblée la posture du héros tragique : <span class="cite">« À vous demander la vie, que je ne puis conserver un moment si Manon part une fois pour l'Amérique. »</span> Cette <span class="proc">hyperbole</span> révèle que sa vie est conditionnée à celle de Manon. Mais la réponse paternelle est d'une sévérité implacable : <span class="cite">« j'aime mieux te voir sans vie que sans sagesse et sans honneur. »</span> Cette réplique révèle deux <span class="effet">systèmes de valeurs inconciliables</span> : la passion pour Des Grieux, l'honneur pour le père.</p>
+        <p>Des Grieux dramatise sa situation par une <span class="proc">gradation d'injonctions</span> et une inversion : il présente la mort comme un cadeau de son père. Le père répond avec une <span class="proc">ironie glaçante</span> : <span class="cite">« Je connais bien des pères qui n'auraient pas attendu si longtemps pour être eux-mêmes tes bourreaux. »</span> L'irréel du passé et la restriction soulignent à la fois la patience exceptionnelle du père et le fait qu'il ne prend pas la menace de Des Grieux au sérieux.</p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 2</div>
+      <div class="mvt-title-text">Une imploration vaine</div>
+      <div class="speech">
+        <p>Des Grieux change de stratégie : <span class="cite">« Je me jetai à ses genoux. »</span> Ce geste symbolique, qui fonctionne comme une <span class="proc">didascalie</span>, vise à susciter la pitié en rappelant la toute-puissance du supplié. Trois injonctions successives : <span class="cite">« Songez que je suis votre fils / Souvenez-vous de ma mère. »</span></p>
+        <p>Il convoque la figure de la mère morte pour créer une <span class="proc">analogie par les irréels du passé</span> : <span class="cite">« Auriez-vous souffert qu'on l'eût arrachée de vos bras ? Vous l'auriez défendue jusqu'à la mort. »</span> Le verbe « arracher » et la mention de la mort montrent la primauté de la passion amoureuse. Trois questions rhétoriques <span class="effet">universalisent la cause</span> : du cas particulier, aux pères en général, puis à tous les êtres humains.</p>
+        <p>Mais cette stratégie se retourne contre lui : <span class="cite">« Tes désordres la feraient mourir de douleur, si elle eût assez vécu pour les voir. »</span> Le souvenir maternel, loin d'attendrir le père, exacerbe son indignation. L'irréel se retourne — <span class="effet">la figure maternelle devient une arme dans le camp du père.</span></p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 3</div>
+      <div class="mvt-title-text">Une rupture définitive</div>
+      <div class="speech">
+        <p>Les <span class="proc">mouvements physiques symboliques</span> scellent la rupture : Des Grieux s'éloigne de quelques pas. Les <span class="proc">tournures impersonnelles</span> expriment la posture du héros tragique soumis à des forces qui le dépassent : <span class="cite">« Il est impossible que je vous suive. Il ne l'est pas moins que je vive. »</span></p>
+        <p>Des Grieux annonce sa mort imminente pour faire culpabiliser le père, puis se retourne pour partir. La <span class="proc">didascalie interne</span> est lourde de sens : ils tournent le dos l'un à l'autre — les deux générations ne peuvent plus se rejoindre.</p>
+        <p>La rupture se matérialise dans le <span class="proc">parallélisme final en chiasme</span> : <span class="cite">« Adieu, fils ingrat et rebelle. — Adieu, père barbare et dénaturé. »</span> La même structure — interjection + apostrophe + deux épithètes — résume en deux répliques toute l'ampleur du conflit. Chacun résume la vision qu'il a de l'autre. Ce sont les derniers mots échangés entre eux : <span class="effet">rupture définitive, tragique et symétrique.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-ccl">Conclusion</div>
+    <div class="ccl-block"><div class="speech">
+      <p>Cet extrait illustre l'incompatibilité absolue entre le monde de la passion et celui de l'honneur social. La théâtralisation de la scène — gestes, apostrophes, effets de symétrie — révèle l'influence du théâtre classique sur la prose romanesque du XVIIIe siècle. Prévost donne à voir un Des Grieux tragique au sens plein du terme : un héros soumis à des forces qui le dépassent, et qui choisit sa perte en toute lucidité.</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ===== T7 ===== -->
+<div class="script" id="t7">
+  <div class="s-header">
+    <div class="s-num">Explication Linéaire 7 · Roman · XVIIIe siècle</div>
+    <div class="s-title">« N'exigez point de moi… » — La mort de Manon</div>
+    <div class="s-author">Manon Lescaut — <b>Abbé Prévost (1753)</b></div>
+    <div class="s-axe"><strong>Axe :</strong> Nous étudierons la <strong>force pathétique</strong> du récit rétrospectif de Des Grieux : le silence et la retenue du langage disent la souffrance mieux qu'aucune effusion.</div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-intro">Introduction</div>
+    <div class="intro-block"><div class="speech">
+      <p>L'Abbé Prévost publie Manon Lescaut en 1753. Dans cet extrait final de la seconde partie, Manon vient de mourir dans le désert américain. Des Grieux, seul, raconte rétrospectivement son deuil et l'ensevelissement de sa bien-aimée. C'est le point culminant du roman.</p>
+      <p>Nous étudierons la <span class="effet">force pathétique du récit rétrospectif</span> de Des Grieux, qui fait éprouver au lecteur sa souffrance par la retenue même du langage. Dans un premier mouvement, Des Grieux exprime une douleur ineffable. Dans un deuxième mouvement, il se présente comme l'amant condamné à vivre seul. Enfin, dans un troisième mouvement, nous observerons l'ensevelissement sacré de Manon.</p>
+    </div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-mvt">Développement</div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 1</div>
+      <div class="mvt-title-text">Une douleur ineffable</div>
+      <div class="speech">
+        <p>Le pathétique réside paradoxalement dans l'impossibilité à relater les émotions : <span class="cite">« N'exigez point de moi que je vous décrive mes sentiments. »</span> Cette adresse directe à Renoncour signale que le narrateur revit les émotions traversées. L'intensité de la douleur se mesure à la retenue du narrateur, qui jusqu'alors mettait sa sensibilité à nu. La <span class="proc">sobriété de l'annonce de la mort</span> est saisissante — le mot « mort » n'est pas prononcé : <span class="cite">« Je la perdis. »</span> Cette sobriété dit <span class="effet">plus que n'importe quelle emphase</span>.</p>
+        <p>Dans son dernier souffle, Manon lui donne <span class="cite">« des marques d'amour »</span> — elle est ainsi hissée au rang d'une grande amante sincère, effaçant rétrospectivement toutes ses trahisons antérieures. C'est l'image ultime que Des Grieux choisit de transmettre.</p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 2</div>
+      <div class="mvt-title-text">L'amant condamné à vivre seul</div>
+      <div class="speech">
+        <p>Des Grieux résume sa vie depuis la mort de Manon en quelques phrases d'une grande densité. L'<span class="proc">euphémisme</span> <span class="cite">« mon âme ne suivit pas la sienne »</span> annonce sa survie en déplorant qu'ils ne se rejoignent pas dans l'éternité — contrairement aux grands couples mythiques comme Roméo et Juliette ou Tristan et Iseut. La <span class="proc">négation et l'antithèse des possessifs</span> — « la sienne / la mienne » — mettent en exergue la séparation définitive.</p>
+        <p>Des Grieux se perçoit comme l'<span class="proc">objet d'une punition divine</span> : <span class="cite">« Le Ciel ne me trouva point sans doute assez rigoureusement puni. »</span> Il inscrit sa survie dans une perspective de rédemption, et renonce même à chercher le bonheur — sacrifice présenté par une <span class="proc">antithèse</span> entre le temps présent et le futur banni : <span class="effet">sa vie terrestre est devenue une pénitence.</span></p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 3</div>
+      <div class="mvt-title-text">L'ensevelissement sacré de Manon</div>
+      <div class="speech">
+        <p>Retour au récit. Des Grieux demeure plus de vingt-quatre heures <span class="cite">« la bouche attachée sur le visage et sur les mains de ma chère Manon »</span>. Ce <span class="proc">complément circonstanciel de durée extraordinaire</span> souligne l'immobilisme, le refus de la mort ou le désir mortifère d'être lui-même emporté.</p>
+        <p>Il renonce au suicide par égard pour le corps de Manon. Les actions qui suivent sont méthodiques, décrites par <span class="proc">juxtaposition</span> — la <span class="proc">périphrase « triste office »</span> confère une connotation sacerdotale à ces gestes : il accomplit un rituel, il voue un culte. Symboliquement, il <span class="cite">« rompt son épée »</span> pour creuser — <span class="effet">il sacrifie l'attribut de sa noblesse</span>. Puis ce sont ses mains qui prennent le relais — les mains, symbole de l'union.</p>
+        <p>Il enveloppe Manon dans ses habits pour que le sable ne la touche pas — sacrifiant encore une partie de son identité. La <span class="proc">périphrase sublimante</span> <span class="cite">« idole de mon cœur »</span> sacralise le corps. La phrase finale est d'une beauté sobre : <span class="cite">« j'ensevelis pour toujours dans le sein de la terre, ce qu'elle avait porté de plus parfait et de plus aimable »</span> — Manon, emblème de la perfection de la Nature, retourne à la Nature. Des Grieux se couche ensuite sur la fosse, le visage tourné vers le sable, <span class="cite">« avec le dessein de ne les ouvrir jamais »</span> — il attend la mort avec impatience, <span class="effet">réuni à Manon par la posture même de son corps.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-ccl">Conclusion</div>
+    <div class="ccl-block"><div class="speech">
+      <p>Cet extrait est le point culminant du roman. La retenue même du langage crée un pathétique plus intense que n'importe quelle effusion. La mort de Manon transforme définitivement Des Grieux : de l'amant passionné, il devient une figure du pénitent, de celui qui voue un culte à la beauté naturelle. Prévost touche ici à la dimension universelle du deuil amoureux.</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ===== T8 ===== -->
+<div class="script" id="t8">
+  <div class="s-header">
+    <div class="s-num">Explication Linéaire 8 · Roman · XIXe siècle</div>
+    <div class="s-title">Le plaidoyer inattendu de Julien Sorel</div>
+    <div class="s-author">Le Rouge et le Noir — <b>Stendhal (1830)</b></div>
+    <div class="s-axe"><strong>Axe :</strong> Dans quelle mesure ce <strong>plaidoyer inattendu et déroutant</strong> transforme-t-il la perception du destin de Julien en révélant sa grandeur d'âme ?</div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-intro">Introduction</div>
+    <div class="intro-block"><div class="speech">
+      <p>Stendhal publie Le Rouge et le Noir en 1830. Ce roman réaliste suit l'ascension sociale de Julien Sorel, fils de charpentier qui tente de s'élever dans la société de la Restauration grâce à son intelligence et son ambition. Dans cet extrait, Julien comparaît devant le jury pour avoir tiré sur Madame de Rênal. On attend un plaidoyer conventionnel pour sa défense — on obtient exactement le contraire.</p>
+      <p>Nous montrerons dans quelle mesure ce <span class="effet">plaidoyer inattendu et déroutant</span> transforme la perception du destin du personnage. Dans un premier mouvement, nous analyserons le discours de Julien en quatre étapes rhétoriques. Dans un second mouvement, le narrateur prendra en charge la suite pour nous décrire les réactions de l'auditoire.</p>
+    </div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-mvt">Développement</div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 1</div>
+      <div class="mvt-title-text">Le discours de Julien — quatre étapes rhétoriques</div>
+      <div class="speech">
+        <p><span class="mvt-head">a) L'exorde provocateur</span>Contrairement à l'usage, Julien ne cherche aucune connivence avec ses juges. Il souligne ironiquement la différence de condition sociale : <span class="cite">« Messieurs, je n'ai point l'honneur d'appartenir à votre classe. »</span> La <span class="proc">fausse affirmation de modestie</span> révèle son insolence. Il se définit non pas par son titre militaire mais par la périphrase révélatrice : <span class="cite">« un paysan qui s'est révolté contre la bassesse de sa fortune. »</span> L'ambitieux a cédé la place au <span class="effet">révolté politique</span>.</p>
+
+        <p><span class="mvt-head">b) La narration des faits</span>Julien ne cherche pas à se défendre — il reconnaît son crime. Il fait l'éloge de la victime avec des superlatifs hyperboliques, et surtout il décrit Madame de Rênal comme une mère : <span class="cite">« Mme de Rênal avait été pour moi comme une mère. »</span> Son crime devient ainsi un matricide. Il refuse délibérément d'évoquer la dimension passionnelle pour préserver l'image de respectabilité de Madame de Rênal — <span class="effet">ultime preuve d'amour</span>.</p>
+
+        <p><span class="mvt-head">c) La confirmation</span>La phrase est saisissante par son implacabilité logique : <span class="cite">« Mon crime est atroce, et il fut prémédité. J'ai donc mérité la mort, messieurs les jurés. »</span> Le connecteur « donc » rend la conclusion inévitable, presque mathématique. <span class="effet">Son courage se révèle pleinement</span> : en faisant un réquisitoire contre lui-même plutôt qu'un plaidoyer, il révèle une grandeur d'âme inattendue.</p>
+
+        <p><span class="mvt-head">d) La réfutation</span>Puis vient le renversement. À partir d'une <span class="proc">concessive</span> — « mais quand je serais moins coupable » — Julien prononce un réquisitoire contre ses propres juges. Il <span class="proc">redéfinit son crime</span> : ce n'est pas le coup de pistolet qui est jugé, c'est son ascension sociale. Il ne se pose plus en individu mais comme le représentant d'une classe dominée. Le tour conclusif avec le présentatif est cinglant : <span class="cite">« Voilà mon crime, messieurs. »</span> Il remet en cause la légitimité du jury : <span class="cite">« je ne suis point jugé par mes pairs. »</span></p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 2</div>
+      <div class="mvt-title-text">La prise en charge par le narrateur — les réactions</div>
+      <div class="speech">
+        <p>Le narrateur prend le relais pour décrire les réactions contrastées de l'auditoire. L'avocat général <span class="cite">« bondissait sur son siège »</span> — l'<span class="proc">imparfait itératif</span> et l'action physique créent un effet <span class="effet">comique qui signale l'indignation</span> d'un homme dont les intérêts de classe sont attaqués. En revanche, les femmes — qui n'ont pas d'intérêts sociaux à défendre — « fondaient en larmes ».</p>
+        <p>La péroraison, résumée par le narrateur, se clôt sur <span class="cite">« l'adoration filiale et sans bornes »</span> portée à Madame de Rênal. Le <span class="proc">champ lexical religieux</span> sacralise cet amour — c'est un paradis perdu. Madame Derville s'évanouit : réaction hyperbolique qui signale l'intensité extrême de cette fin de discours.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-ccl">Conclusion</div>
+    <div class="ccl-block"><div class="speech">
+      <p>Ce plaidoyer est paradoxal : Julien s'accuse pour mieux accuser la société. Sa condamnation à mort devient une victoire morale. Stendhal réalise ici une critique virulente de la société de la Restauration, incapable de justice vraie face aux barrières de classe. Et Julien, en choisissant de mourir en plébéien révolté plutôt qu'en gentilhomme, accomplit une forme de cohérence tragique avec lui-même.</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ===== T9 ===== -->
+<div class="script" id="t9">
+  <div class="s-header">
+    <div class="s-num">Explication Linéaire 9 · Théâtre romantique · XIXe siècle</div>
+    <div class="s-title">Les retrouvailles (Acte I, scène 2)</div>
+    <div class="s-author">On ne badine pas avec l'amour — <b>Alfred de Musset (1834)</b></div>
+    <div class="s-axe"><strong>Axe :</strong> Nous verrons que cette réunion joue avec la <strong>symétrie pour mieux introduire la discordance</strong> : le baron veut de la symétrie, mais Camille la brise.</div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-intro">Introduction</div>
+    <div class="intro-block"><div class="speech">
+      <p>Alfred de Musset publie On ne badine pas avec l'amour en 1834, pièce classée parmi les « proverbes » dramatiques. L'œuvre mêle comédie et tragédie, et met en scène la confrontation entre Perdican, jeune homme qui rentre de ses études à Paris, et Camille, sa cousine qui vient de quitter le couvent. Dans l'extrait proposé, tiré de la scène 2 de l'acte I, le Baron réunit les deux jeunes gens, espérant les marier.</p>
+      <p>Nous verrons que cette réunion joue avec la <span class="effet">symétrie pour mieux introduire la discordance</span>. Dans un premier mouvement, le Baron orchestre des retrouvailles symétriques. Dans un second mouvement, la situation se révèle exactement à l'inverse de ce qui était prévu.</p>
+    </div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-mvt">Développement</div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 1</div>
+      <div class="mvt-title-text">Des retrouvailles orchestrées</div>
+      <div class="speech">
+        <p>La didascalie inaugure la symétrie : « Perdican entre d'un côté, Camille de l'autre. » Le Baron a tout planifié, et son salut reprend cette symétrie par un <span class="proc">chiasme</span> : <span class="cite">« Bonjour, ma chère Camille, mon cher Perdican ; embrassez-moi, et embrassez-vous. »</span> Du Baron à chacun, puis de chacun au Baron — la structure est parfaite.</p>
+        <p>Perdican répond avec enthousiasme en respectant l'ordre souhaité. Les <span class="proc">modalités exclamatives</span> — « Quel bonheur ! que je suis heureux ! » — témoignent d'une joie sincère. Camille obéit elle aussi à l'ordre, mais deux dissonances surgissent : le « bonjour » devient <span class="cite">« je vous salue »</span> — formule distante et protocolaire — et elle n'emploie aucune épithète affective pour Perdican, qui est désigné par son seul statut : « mon cousin ». <span class="effet">Aucune joie n'est exprimée.</span></p>
+        <p>Cette froideur n'est perçue ni par Perdican — qui continue de s'exclamer sur la beauté de Camille — ni par le Baron — qui lui pose une banale question de voyage. <span class="effet">Chacun continue de suivre son fil sans guère s'entendre.</span></p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 2</div>
+      <div class="mvt-title-text">Une situation à l'inverse de ce qui était prévu</div>
+      <div class="speech">
+        <p>Pressée d'embrasser Perdican, Camille oppose un refus sec : <span class="cite">« Excusez-moi. »</span> Ce refus inattendu brise la symétrie soigneusement construite. Perdican réplique avec délicatesse — il refuse de voler un baiser, car « l'amour peut voler un baiser, mais non pas l'amitié. » Il ne force rien. Camille réplique alors par un <span class="proc">chiasme</span> qui reprend ses termes : <span class="cite">« L'amitié ni l'amour ne doivent recevoir que ce qu'ils peuvent rendre. »</span> Ce chiasme <span class="effet">affirme la non-réciprocité comme principe</span> — Camille a pris une décision intérieure que le spectateur ne comprend pas encore.</p>
+        <p>Le Baron, déconcerté, se retourne vers Maître Bridaine. Ses lamentations — <span class="cite">« Je suis choqué, — blessé, — cette réponse m'a déplu »</span> — saccadées par les <span class="proc">tirets</span>, créent un effet comique. Mais la <span class="proc">didascalie interne</span> finale est lourde de sens : « les voilà qui se tournent le dos. » Le jeu symétrique est inversé : au lieu de se rapprocher, les deux personnages se font face de dos. Maître Bridaine observe : <span class="cite">« Dites-leur quelques mots ; les voilà qui se tournent le dos. »</span> <span class="effet">La dysharmonie vient des jeunes gens eux-mêmes, et de leurs éducations divergentes.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-ccl">Conclusion</div>
+    <div class="ccl-block"><div class="speech">
+      <p>Contrairement à la comédie classique, le nœud dramatique de cette pièce ne tire pas son origine d'un événement extérieur — un père tyrannique, un rival, un quiproquo — mais d'une décision intime de Camille. Cela confère à la pièce une profondeur psychologique proprement romantique, et annonce que les jeux de la parole entre ces deux personnages auront des conséquences tragiques.</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ===== T10 ===== -->
+<div class="script" id="t10">
+  <div class="s-header">
+    <div class="s-num">Explication Linéaire 10 · Théâtre romantique · XIXe siècle</div>
+    <div class="s-title">Les deux tirades de Perdican (Acte II, scène 5)</div>
+    <div class="s-author">On ne badine pas avec l'amour — <b>Alfred de Musset (1834)</b></div>
+    <div class="s-axe"><strong>Axe :</strong> À la leçon anticléricale succède un <strong>credo lyrique pour l'amour terrestre</strong>. Nous étudierons ce jeu de leçons — et l'aveuglement de Perdican sur son propre orgueil.</div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-intro">Introduction</div>
+    <div class="intro-block"><div class="speech">
+      <p>Alfred de Musset publie On ne badine pas avec l'amour en 1834. Dans l'extrait de l'acte II, scène 5, Perdican et Camille se retrouvent seuls. Camille voulait partir sans lui donner la main, mais elle est revenue s'asseoir sur l'herbe. Perdican, furieux et blessé, prononce deux grandes tirades.</p>
+      <p>Nous étudierons ce <span class="effet">jeu de leçons</span> : comment Perdican répond à la leçon des nonnes par sa propre leçon lyrique — et comment son aveuglement sur son propre orgueil prépare le dénouement tragique. Dans un premier mouvement, Perdican prononce une leçon violemment anticléricale. Dans un second mouvement, il formule un véritable credo pour l'amour terrestre.</p>
+    </div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-mvt">Développement</div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 1</div>
+      <div class="mvt-title-text">Une leçon violemment anticléricale</div>
+      <div class="speech">
+        <p>Perdican ouvre sur une question rhétorique indignée : <span class="cite">« Sais-tu ce que c'est que des nonnes, malheureuse fille ? »</span> Le tutoiement, l'apostrophe dépréciatrice et la modalité interrogative signalent l'indignation. Il accuse les nonnes d'une <span class="proc">imposture double</span> grâce au <span class="proc">polyptote du verbe « savoir »</span> : elles ignorent ce qu'elles prétendent enseigner. Pire encore : elles mentent sur l'amour des hommes mais, selon Perdican, elles mentent davantage encore sur l'amour divin — c'est un <span class="proc">argument de rétorsion</span>.</p>
+        <p>Perdican interprète rétrospectivement les comportements de Camille aux actes précédents comme autant de signes de son aliénation : son refus de lui donner la main, son refus de se promener, sa froideur lors des retrouvailles. La <span class="proc">métaphore du masque de plâtre</span> résume cette aliénation — Camille porte un masque qui la fige dans la froideur artificielle.</p>
+        <p>Mais Perdican, emporté par la colère, prononce alors des paroles blasphématoires qui ne peuvent qu'éloigner Camille : <span class="cite">« le ciel n'est pas pour elles. »</span> L'antiphrase et l'interjection signalent que sa colère éclate. <span class="effet">L'orgueil et le dépit lui font donner une leçon à Camille tout en lui aliénant ce qu'il veut conquérir.</span></p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 2</div>
+      <div class="mvt-title-text">Un credo pour l'amour terrestre — leçon aux nonnes et au monde</div>
+      <div class="speech">
+        <p>La deuxième tirade est construite comme un credo philosophique enchâssant plusieurs niveaux de discours rapportés. Elle commence par un adieu qui est en réalité une adresse : <span class="cite">« Adieu, Camille, retourne à ton couvent, et lorsqu'on te fera de ces récits hideux qui t'ont empoisonnée, réponds ce que je vais te dire. »</span></p>
+        <p>Suit une longue <span class="proc">protase concessive</span> à trois propositions — hommes, femmes, monde — qui accumule toutes les tares humaines : <span class="cite">« Tous les hommes sont menteurs, inconstants, faux, bavards, hypocrites, orgueilleux et lâches »</span>, les femmes « perfides », le monde « un égout sans fond ». Cette accumulation reprend le point de vue des nonnes de façon outrancière — argument de rétorsion pour lui opposer un renversement triomphal. Le <span class="cite">« mais »</span> central opère la bascule vers le sublime : <span class="cite">« il y a au monde une chose sainte et sublime, c'est l'union de deux de ces êtres si imparfaits et affreux. »</span> L'emploi du vocabulaire religieux — « sainte et sublime » — <span class="effet">sacralise l'amour humain sur le terrain même des nonnes</span>.</p>
+        <p>À l'intérieur de ce discours s'en inscrit un autre : celui de l'être humain à l'heure de sa mort, faisant le bilan — une <span class="proc">prosopopée</span>. <span class="cite">« J'ai souffert souvent, je me suis trompé quelquefois ; mais j'ai aimé. C'est moi qui ai vécu, et non pas un être factice créé par mon orgueil et mon ennui. »</span> Ces deux dernières phrases, empruntées à une lettre de George Sand à Musset, constituent le climax de la tirade. L'antithèse finale désigne la vraie cause du conflit — l'orgueil — <span class="effet">sans que Perdican la voie en lui-même.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-ccl">Conclusion</div>
+    <div class="ccl-block"><div class="speech">
+      <p>La tirade de Perdican est un plaidoyer passionné pour l'amour terrestre — mais sa colère même révèle qu'il ne maîtrise pas son discours. Le spectateur, informé par l'ironie dramatique, perçoit que c'est le dépit amoureux qui parle. Les jeux du langage chez Musset, contrairement à Marivaux, conduisent vers le malheur plutôt que vers la vérité du cœur.</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ===== T11 ===== -->
+<div class="script" id="t11">
+  <div class="s-header">
+    <div class="s-num">Explication Linéaire 11 · Théâtre romantique · XIXe siècle</div>
+    <div class="s-title">Le double dénouement en miroir (Acte III, scène 8)</div>
+    <div class="s-author">On ne badine pas avec l'amour — <b>Alfred de Musset (1834)</b></div>
+    <div class="s-axe"><strong>Axe :</strong> Nous montrerons que ce <strong>double dénouement en miroir inversé</strong> révèle le sens du titre : on ne badine pas avec l'amour.</div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-intro">Introduction</div>
+    <div class="intro-block"><div class="speech">
+      <p>Alfred de Musset publie On ne badine pas avec l'amour en 1834. Dans l'extrait final — l'acte III, scène 8 — la pièce touche à son dénouement. Tout l'acte III a vu Perdican feindre d'aimer Rosette, la sœur de lait de Camille, pour la rendre jalouse. Cette manipulation aura des conséquences irréparables.</p>
+      <p>Nous montrerons que ce <span class="effet">double dénouement en miroir inversé</span> révèle le sens du titre. Dans un premier mouvement, la tirade de Perdican esquisse un dénouement heureux. Mais dans un second mouvement, le cri de Rosette précipite la pièce vers un dénouement tragique.</p>
+    </div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-mvt">Développement</div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 1</div>
+      <div class="mvt-title-text">L'esquisse d'un dénouement heureux</div>
+      <div class="speech">
+        <p>La tirade de Perdican s'ouvre sur une prise de conscience lumineuse : <span class="cite">« Insensés que nous sommes ! nous nous aimons. »</span> La mise en exergue de l'adjectif souligne que trois actes de malentendus ont été nécessaires pour parvenir à cette <span class="effet">évidence d'une simplicité désarmante</span>.</p>
+        <p>Perdican recherche les causes de cet aveuglement. Le langage a été l'instrument du mensonge : <span class="cite">« Quelles vaines paroles, quelles misérables folies ont passé comme un vent funeste entre nous deux ? »</span> Il veut lui redonner sa fonction de vérité.</p>
+        <p>Deux <span class="proc">métaphores filées</span> déploient un lyrisme romantique. La première : <span class="cite">« le bonheur est une perle si rare dans cet océan d'ici-bas ! »</span> — Dieu est pêcheur céleste, le bonheur est perle rare. La seconde : <span class="cite">« le vert sentier qui nous amenait l'un vers l'autre avait une pente si douce »</span> — ce paysage idyllique rappelle le jardin d'Eden, où amour humain et amour divin se confondent. Mais ce sentier a été barré par la vanité, le bavardage et la colère — les rochers informes de la vie. La tirade se clôt sur la répétition de l'assertion : <span class="cite">« Ô insensés, nous nous aimons. »</span></p>
+        <p>Camille répond par un double acquiescement : <span class="cite">« Oui, nous nous aimons, Perdican. »</span> Le langage retrouve enfin sa fonction de vérité. Il l'embrasse. Mais l'exclamation — <span class="cite">« Chère créature, tu es à moi ! »</span> — porte une ambiguïté : cri d'amour, mais aussi <span class="effet">cri d'orgueil de l'homme qui croit posséder</span> — annonce du retournement.</p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 2</div>
+      <div class="mvt-title-text">Un dénouement tragique</div>
+      <div class="speech">
+        <p>Le cri de Rosette surgit hors scène et rompt tout. Ce cri répond aux déclarations d'amour comme un écho douloureux : le duo était épié. Rosette, qui ne manie pas le langage et ne joue pas — <span class="effet">personnage de sincérité absolue</span> — est le miroir inversé de Camille.</p>
+        <p>Le dialogue se rompt. Les répliques s'accélèrent. Perdican est pétrifié : <span class="cite">« il me semble que mes mains sont couvertes de sang. »</span> Cette image évoque <span class="proc">Lady Macbeth</span> — la culpabilité tragique d'un homme qui réalise les conséquences de ses jeux. Camille prend les initiatives.</p>
+        <p>La prière de Perdican à Dieu est pathétique par ses <span class="proc">futurs irréels</span> : <span class="cite">« elle sera riche, elle sera heureuse. »</span> Ces futurs sont d'autant plus douloureux qu'ils ne pourront jamais se réaliser — <span class="effet">la jeunesse de Rosette est fauchée au milieu de ses espérances.</span></p>
+        <p>La réplique finale de Camille est d'une sécheresse absolue : <span class="cite">« Elle est morte. Adieu, Perdican. »</span> Deux phrases, deux ruptures simultanées : Rosette et Perdican. <span class="effet">Le silence qui suit dit tout : on ne badine pas avec l'amour.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-ccl">Conclusion</div>
+    <div class="ccl-block"><div class="speech">
+      <p>Ce dénouement en miroir inversé est d'une cruauté implacable : au moment précis où l'amour est enfin dit et partagé, il est condamné. Rosette, qui ne jouait pas, paie de sa vie les jeux de ceux qui jouaient trop avec les mots. Musset révèle ici toute la violence de ce que son titre annonçait : la légèreté en amour n'est pas une liberté, c'est une faute tragique.</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ===== T12 ===== -->
+<div class="script" id="t12">
+  <div class="s-header">
+    <div class="s-num">Explication Linéaire 12 · Comédie · XVIIIe siècle</div>
+    <div class="s-title">L'aveu progressif de Silvia (Acte II, scène 9)</div>
+    <div class="s-author">La Double Inconstance — <b>Marivaux (1723)</b></div>
+    <div class="s-axe"><strong>Axe :</strong> Nous verrons comment la <strong>stratégie du Prince masqué</strong> conduit Silvia vers l'aveu progressif de la vérité de son cœur, révélant que le langage est à la fois masque et miroir des sentiments.</div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-intro">Introduction</div>
+    <div class="intro-block"><div class="speech">
+      <p>Marivaux publie La Double Inconstance en 1723. Cette comédie met en scène deux villageois, Silvia et Arlequin, que le Prince a fait enlever pour conquérir Silvia. Le Prince, déguisé en officier, tente de se faire aimer d'elle sous un faux nom. Au fil des actes, Silvia se détache progressivement d'Arlequin sans s'en apercevoir. Dans l'extrait proposé, tiré de la dernière scène de l'acte II, Silvia est dans un état de grande confusion sentimentale.</p>
+      <p>Nous verrons comment la <span class="effet">stratégie du Prince masqué</span> conduit Silvia vers l'aveu progressif de la vérité de son cœur — et comment le langage est à la fois masque et miroir des sentiments. Dans un premier mouvement, l'échange révèle la confusion des désirs de Silvia. Dans un second mouvement, son langage fait émerger l'aveu de plus en plus lisible de son véritable désir.</p>
+    </div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-mvt">Développement</div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 1</div>
+      <div class="mvt-title-text">La confusion des désirs de Silvia</div>
+      <div class="speech">
+        <p>La scène s'ouvre sur une question du Prince qui remet son sort entre les mains de Silvia : <span class="cite">« Que voulez-vous donc que je devienne, belle Silvia ? »</span> L'apostrophe galante et la <span class="proc">question partielle renforcée par « donc »</span> exigent une réponse précise — <span class="effet">il lui force la main</span>.</p>
+        <p>Silvia opère un pas de côté en éludant la question : <span class="cite">« Oh ce que je veux, j'attends qu'on me le dise, j'en suis encore plus ignorante que vous. »</span> Elle avoue ainsi ne pas savoir ce qu'elle veut — aveu d'un trouble intérieur profond. L'<span class="proc">anaphore de « voilà »</span> structure ensuite son bilan : <span class="cite">« voilà Arlequin qui m'aime, voilà le Prince qui demande mon cœur, voilà vous qui mériteriez de l'avoir... »</span> Cette énumération de propositions juxtaposées traduit la <span class="proc">fragmentation de son être</span>. Mais le troisième terme se distingue des deux premiers : au lieu d'un simple constat, c'est un <span class="proc">jugement de valeur</span> — <span class="cite">« vous qui mériteriez de l'avoir. »</span> <span class="effet">Silvia révèle sans le savoir la vérité de son cœur au milieu d'un bilan.</span></p>
+        <p>Pour Marivaux, l'amour de soi précède l'amour pour l'autre : Silvia envisage aussi le mariage princier comme une solution narcissique pour restaurer son image, blessée par les attaques de Lisette. La progression continue : <span class="cite">« Je pourrais bien vous aimer, cela ne serait pas difficile, si je voulais. »</span> La <span class="proc">modalité du possible</span> succède à celle du désir — un pas de plus vers l'aveu.</p>
+      </div>
+    </div>
+
+    <div class="mvt-block">
+      <div class="mvt-num-tag">Mouvement 2</div>
+      <div class="mvt-title-text">Vers un aveu de plus en plus lisible</div>
+      <div class="speech">
+        <p>Le Prince joue alors la <span class="proc">fausse sortie</span> : il feint de croire que Silvia veut le voir partir. Silvia réagit vivement — la <span class="proc">didascalie</span> l'indique : <span class="cite">« Adieu, Silvia ! Je vous querellerais volontiers ; où allez-vous ? Restez-là, c'est ma volonté, je la sais mieux que vous peut-être. »</span> Alarmée, elle ne cache plus son désir de le retenir. L'ironie involontaire de sa formulation — « je la sais mieux que vous » alors qu'elle venait de dire qu'elle ne la connaissait pas — <span class="effet">révèle comiquement sa totale confusion</span>.</p>
+        <p>Le souhait irréfléchi fuse enfin : <span class="cite">« Encore si c'était vous qui fût le Prince ! »</span> La modalité exclamative et la forme elliptique marquent un aveu spontané, arraché par le désir. Le <span class="proc">subjonctif dans la relative</span> signale que cette hypothèse lui semble impossible — mais le spectateur sait que c'est la réalité. L'<span class="proc">ironie dramatique</span> est à son comble.</p>
+        <p>Silvia construit alors une hypothèse-excuse : si cet officier était le Prince, elle pourrait rompre avec Arlequin en invoquant l'obéissance due au maître. Ce <span class="proc">mensonge dit la vérité du cœur</span> : elle est prête à mentir pour que son désir se réalise. La restriction finale — <span class="cite">« il n'y a que pour vous que je voudrais prendre cette excuse-là »</span> — donne encore plus de clarté à son aveu inconscient. L'aparté final du Prince — <span class="cite">« Qu'elle est aimable ! Il est temps de dire qui je suis. »</span> — confirme qu'il est arrivé à ses fins.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label label-ccl">Conclusion</div>
+    <div class="ccl-block"><div class="speech">
+      <p>Cet extrait illustre parfaitement le « marivaudage » : ce travail minutieux sur les nuances du langage pour révéler les mouvements imperceptibles du cœur. Chez Marivaux, le langage est à la fois masque — les personnages se cachent derrière les mots — et miroir — la vérité finit toujours par affleurer malgré soi. On peut comparer cet extrait avec les jeux du langage dans On ne badine pas avec l'amour de Musset : chez Marivaux, ils conduisent à la découverte joyeuse du sentiment ; chez Musset, ils conduisent à la tragédie.</p>
+    </div></div>
+  </div>
+</div>
+
+</main>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.script').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('visible');
+  btn.classList.add('active');
+  document.querySelector('.main').scrollTop = 0;
+}
+</script>
+</body>
+</html>
